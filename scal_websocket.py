@@ -24,6 +24,7 @@ trade_side = 0
 order_price = 0
 lest_qty = 0
 margin_trade_type = 3
+position_interval_counter = 0
 
 
 def print_with_time(message, end):
@@ -93,8 +94,7 @@ def on_message(ws, message):
                     if cur_price >= order_price + 10:
                         exit_order_id = \
                             settle_ioc_limit.settle_ioc_limit_a(1, margin_trade_type, lest_qty, order_price + 10)
-                    else:
-                        return
+
             # 売りエントリの場合
             else:
                 # 損切 or 時間切れ
@@ -105,8 +105,6 @@ def on_message(ws, message):
                     if cur_price <= order_price - 10:
                         exit_order_id = \
                             settle_ioc_limit.settle_ioc_limit_a(2, margin_trade_type, lest_qty, order_price - 10)
-                    else:
-                        return
 
             time.sleep(0.25)
 
@@ -117,8 +115,16 @@ def on_message(ws, message):
                         break
                     time.sleep(0.15)
 
-            # ポジション数を更新
-            scal_websocket.lest_qty = positions.positions_a(trade_side)
+                # ポジション数を更新
+                scal_websocket.lest_qty = positions.positions_a(trade_side)
+
+            else:
+                # 他フォームから決済の場合もあるので10回に1回はポジション数を更新
+                if scal_websocket.position_interval_counter > 10:
+                    scal_websocket.lest_qty = positions.positions_a(trade_side)
+                    scal_websocket.position_interval_counter = 0
+                else:
+                    scal_websocket.position_interval_counter = scal_websocket.position_interval_counter + 1
 
         else:
             # すべて決済済みでも最低ある程度は記録を残す
@@ -147,6 +153,7 @@ def trade_start(param_side):
     scal_websocket.order_price = 0
     scal_websocket.lest_qty = 0
     scal_websocket.margin_trade_type = 3
+    scal_websocket.position_interval_counter = 0
 
     # 引数から売りか買いかを取得
     scal_websocket.trade_side = param_side
