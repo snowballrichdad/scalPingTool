@@ -87,24 +87,30 @@ def on_message(ws, message):
             # 買いエントリの場合
             if trade_side == "2":
                 # 損切 or 時間切れ
-                if cur_price <= order_price - 20 or now_time > settings.exit_time:
+                if cur_price <= order_price - settings.buy_stop_loss_margin or now_time > settings.exit_time:
                     exit_order_id = send_order_exit_market.send_order_exit_market(1, margin_trade_type, lest_qty)
                 else:
                     # 利食い
-                    if cur_price >= order_price + 10:
-                        exit_order_id = \
-                            settle_ioc_limit.settle_ioc_limit_a(1, margin_trade_type, lest_qty, order_price + 10)
+                    if cur_price >= order_price + settings.buy_take_profit_margin:
+                        exit_order_id = settle_ioc_limit.settle_ioc_limit_a(
+                            1,
+                            margin_trade_type,
+                            lest_qty,
+                            order_price + settings.buy_take_profit_margin)
 
             # 売りエントリの場合
             else:
                 # 損切 or 時間切れ
-                if cur_price >= order_price + 20 or now_time > settings.exit_time:
+                if cur_price >= order_price + settings.sell_stop_loss_margin or now_time > settings.exit_time:
                     exit_order_id = send_order_exit_market.send_order_exit_market(2, margin_trade_type, lest_qty)
                 else:
                     # 利食い
-                    if cur_price <= order_price - 10:
-                        exit_order_id = \
-                            settle_ioc_limit.settle_ioc_limit_a(2, margin_trade_type, lest_qty, order_price - 10)
+                    if cur_price <= order_price - settings.sell_take_profit_margin:
+                        exit_order_id = settle_ioc_limit.settle_ioc_limit_a(
+                            2,
+                            margin_trade_type,
+                            lest_qty,
+                            order_price - settings.sell_take_profit_margin)
 
             time.sleep(0.25)
 

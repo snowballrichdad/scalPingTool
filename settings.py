@@ -11,6 +11,10 @@ f.close()
 
 symbol = "1570"
 qty = 100
+buy_take_profit_margin = 10
+buy_stop_loss_margin = 20
+sell_take_profit_margin = 10
+sell_stop_loss_margin = 20
 
 now_time = dt.now()
 
