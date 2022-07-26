@@ -39,8 +39,10 @@ def send_order_exit_market(side, marginTradeType, qty):
             print()
             content = json.loads(res.read())
             pprint.pprint(content)
+            # 注文ID
+            order_id = content['OrderId']
 
-            return
+            return order_id
 
     except urllib.error.HTTPError as e:
         print(e)

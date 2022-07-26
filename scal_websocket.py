@@ -88,7 +88,7 @@ def on_message(ws, message):
             if trade_side == "2":
                 # 損切 or 時間切れ
                 if cur_price <= order_price - 20 or now_time > settings.exit_time:
-                    send_order_exit_market.send_order_exit_market(1, margin_trade_type, lest_qty)
+                    exit_order_id = send_order_exit_market.send_order_exit_market(1, margin_trade_type, lest_qty)
                 else:
                     # 利食い
                     if cur_price >= order_price + 10:
@@ -99,7 +99,7 @@ def on_message(ws, message):
             else:
                 # 損切 or 時間切れ
                 if cur_price >= order_price + 20 or now_time > settings.exit_time:
-                    send_order_exit_market.send_order_exit_market(2, margin_trade_type, lest_qty)
+                    exit_order_id = send_order_exit_market.send_order_exit_market(2, margin_trade_type, lest_qty)
                 else:
                     # 利食い
                     if cur_price <= order_price - 10:

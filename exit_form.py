@@ -15,7 +15,7 @@ def btn_sell_entry_exit_click():
 # 画面作成
 tkTrade = tkinter.Tk()
 tkTrade.geometry('300x200')  # 画面サイズの設定
-tkTrade.title('決済')  # 画面タイトルの設定
+tkTrade.title('強制決済')  # 画面タイトルの設定
 
 # ボタンの作成
 btnBuy = tkinter.Button(tkTrade, text='買いエントリイクジット', command=btn_buy_entry_exit_click)
