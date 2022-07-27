@@ -5,10 +5,10 @@ from tkinter import ttk
 
 # 画面作成
 tkTrade = Tk()
-tkTrade.geometry('350x250')  # 画面サイズの設定
+tkTrade.geometry('300x250')  # 画面サイズの設定
 tkTrade.title('scal')  # 画面タイトルの設定
 
-frame0 = ttk.Frame(tkTrade, padding=(32, 20, 32, 10))
+frame0 = ttk.Frame(tkTrade, padding=(10, 20, 10, 10))
 frame0.grid()
 
 label0 = ttk.Label(frame0, text='建玉数', padding=(5, 10, 5, 10))
@@ -25,7 +25,7 @@ positions_entry = ttk.Entry(
 positions_entry.grid(row=0, column=1, sticky=W)
 
 tkTrade.resizable(False, False)
-frame1 = ttk.Frame(tkTrade, padding=(32, 10, 32, 32))
+frame1 = ttk.Frame(tkTrade, padding=(10, 10, 10, 32))
 frame1.grid()
 
 label1 = ttk.Label(frame1, text='買いTakeProfit', padding=(5, 10, 5, 10))
