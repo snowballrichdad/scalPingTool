@@ -10,7 +10,7 @@ token = f.read()
 f.close()
 
 symbol = "1570"
-qty = 100
+qty = 10
 buy_take_profit_margin = 10
 buy_stop_loss_margin = 20
 sell_take_profit_margin = 10

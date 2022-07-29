@@ -34,7 +34,8 @@ def print_with_time(message, end):
 def on_message(ws, message):
     content = json.loads(message)
     scal_websocket.cur_price = content["CurrentPrice"]
-    print_with_time("curPrice:" + str(cur_price), " ")
+    print_with_time("CurrentPriceTime:" + content["CurrentPriceTime"], " ")
+    print("curPrice:" + str(cur_price), " ")
     if cur_price is None:
         print("")
         return
